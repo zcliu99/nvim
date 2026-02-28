@@ -141,7 +141,7 @@ return {
 		-- ======= Mason setups =========
 		require("mason").setup({})
 		require("mason-lspconfig").setup({
-			ensure_installed = { "lua_ls", "pyright", "clangd", "bashls", "ts_ls", "intelephense" },
+			ensure_installed = { "lua_ls", "pyright", "clangd", "bashls", "ts_ls" },
 			handlers = {
 				-- This function runs for *all* installed servers
 				function(server)
