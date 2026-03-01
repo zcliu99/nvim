@@ -38,15 +38,41 @@ local function on_attach(client, bufnr)
 	})
 
 	-- Keymaps (unchanged)
-	vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-	vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+	-- vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+	-- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+	-- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+	-- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 	vim.keymap.set("n", "go", vim.lsp.buf.type_definition, opts)
-	vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+	-- vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
 	vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, opts)
 	vim.keymap.set("n", "gl", vim.diagnostic.open_float, opts)
 	vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, opts)
+
+	-- ==========================================================================
+	-- LSP NAVIGATION & UTILITY KEYBINDINGS
+	-- ==========================================================================
+
+	-- 1. JUMPING TO CODE
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to Definition" })
+	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to Declaration" })
+	vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to Implementation" })
+	vim.keymap.set("n", "gy", vim.lsp.buf.type_definition, { desc = "Go to Type Definition" })
+	vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "List References" })
+
+	-- 3. INFORMATION & DOCS
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
+	vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, { desc = "Signature Help" })
+
+	-- 4. REFACTORING & ACTIONS
+	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename Variable/Function" })
+	vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Actions" })
+	vim.keymap.set("n", "<leader>f", function()
+		vim.lsp.buf.format({ async = true })
+	end, { desc = "Format File" })
+
+	-- 5. DIAGNOSTICS (ERRORS/WARNINGS)
+	vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show Line Diagnostics" })
+	vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open Diagnostic List" })
 
 	-- F3: reindent + format (force null-ls for Lua)
 	vim.keymap.set({ "n", "x" }, "<F3>", function()
